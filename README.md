@@ -10,5 +10,5 @@ DevOps tutorial for beginners
 
 3. Now we want to download the workshop's code repoistory to our computer.
 Run the following:<br>
-`git clone https://github.com/yanivbhemo/DevOps101.git
-cd DevOps101`
+`git clone https://github.com/yanivbhemo/DevOps101.git`<br>
+`cd DevOps101`
