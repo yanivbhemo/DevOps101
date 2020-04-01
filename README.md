@@ -5,7 +5,10 @@ DevOps tutorial for beginners
 1. Please download + install git to your computer<br>
 `https://github.com/git-for-windows/git/releases/download/`
 
-2. Open Command Line (CMD)<br>
+2. Open Command Line (CMD) and run:<br>
 `cd %USERPROFILE%\Desktop`
 
-3. 
+3. Now we want to download the workshop's code repoistory to our computer.
+Run the following:<br>
+`git clone https://github.com/yanivbhemo/DevOps101.git
+cd DevOps101`
