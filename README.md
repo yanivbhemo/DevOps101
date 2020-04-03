@@ -21,10 +21,12 @@ Please insert them like this:<br>
 ```
 cd %USERPROFILE%
 mkdir .aws && cd .aws
-vi credentials ```
+vi credentials 
+```
 Change the access_key_id & secret with what you received from us
 <br>
-```[default]
+```
+[default]
 aws_access_key_id = ********************
 aws_secret_access_key = *****************************
 ```
@@ -150,7 +152,8 @@ Do you want to perform these actions?
   Only 'yes' will be accepted to approve.
 
   Enter a value: yes
-  
+```
+```  
 aws_lightsail_instance.dell-devops-lab01: Creating...
 aws_lightsail_instance.dell-devops-lab01: Still creating... [10s elapsed]
 aws_lightsail_instance.dell-devops-lab01: Still creating... [20s elapsed]
