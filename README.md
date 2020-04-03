@@ -23,7 +23,7 @@ cd %USERPROFILE%
 mkdir .aws && cd .aws
 vi credentials 
 ```
-Change the access_key_id & secret with what you received from us
+2. Change the access_key_id & secret with what you received from us and save the file
 <br>
 ```
 [default]
