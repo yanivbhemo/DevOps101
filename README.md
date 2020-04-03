@@ -26,7 +26,7 @@ The tool we will use is <a href="https://learn.hashicorp.com/terraform">Terrafor
 `Windows: C:\Windows\System32`<br>
 `Linux: /usr/local/bin`
 
-3. Verify the installation by entering CMD/Shell and <br>
+3. Verify the installation by entering CMD/Shell and run:<br>
 `terraform`
 
 ### Build infrastrcture
@@ -35,8 +35,8 @@ Please enter to it.<br>
 `cd learn-terraform-aws-instance`
 
 2. Initilization phase - First action before run any new configuration<br>
-`terraform init`<br>
-Output:
+`terraform init`<br><br>
+<b>Output:</b>
 ```C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform init
 
 Initializing the backend...
@@ -64,3 +64,29 @@ should now work.
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.```
+
+3. Prepare the config file - <br>
+In the config file we will write all the resources we need to deploy.<br>
+I have prepared one in advance for you, lets check it out.<br>
+```
+C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>cat example.tf
+
+provider "aws" {
+	profile    = "default"
+	region     = "eu-west-1"
+}
+
+resource "aws_lightsail_instance" "dell-devops-lab01" {
+  name              = "custom_gitlab"						----> name of the server to be created
+  availability_zone = "eu-west-1a"							----> In which AZ
+  blueprint_id      = "amazon_linux_2018_03_0_2"			----> OS
+  bundle_id         = "nano_2_0"							----> Hardware type
+  tags = {													----> General key-value tags
+    foo = "bar"
+  }
+}
+```
+
+4. After finish with code needed, we run `terraform validate` and check our config<br>
+```C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
+Success! The configuration is valid.```
