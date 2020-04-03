@@ -37,7 +37,8 @@ Please enter to it.<br>
 2. Initilization phase - First action before run any new configuration<br>
 `terraform init`<br><br>
 <b>Output:</b>
-```C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform init
+```
+C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform init
 
 Initializing the backend...
 
@@ -63,7 +64,8 @@ should now work.
 
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.```
+commands will detect it and remind you to do so if necessary.
+```
 
 3. Prepare the config file - <br>
 In the config file we will write all the resources we need to deploy.<br>
