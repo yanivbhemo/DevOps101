@@ -68,8 +68,7 @@ commands will detect it and remind you to do so if necessary.```
 3. Prepare the config file - <br>
 In the config file we will write all the resources we need to deploy.<br>
 I have prepared one in advance for you, lets check it out.<br>
-```
-C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>cat example.tf
+```C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>cat example.tf
 
 provider "aws" {
 	profile    = "default"
@@ -84,8 +83,7 @@ resource "aws_lightsail_instance" "dell-devops-lab01" {
   tags = {													----> General key-value tags
     foo = "bar"
   }
-}
-```
+}```
 
 4. After finish with code needed, we run `terraform validate` and check our config<br>
 ```C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
