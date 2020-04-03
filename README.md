@@ -12,3 +12,8 @@ DevOps tutorial for beginners
 Run the following:<br>
 `git clone https://github.com/yanivbhemo/DevOps101.git`<br>
 `cd DevOps101`
+
+## Stage 1 - Deploy infrastrcture using Terraform
+In this section we will deploy 2 lightsail servers in aws using
+IaaS/IaC methodologies.
+The tool we will use is <a href="https://learn.hashicorp.com/terraform">Terraform</a>, one of the most popular tools for that kind of requirements made by Hashicorp 
