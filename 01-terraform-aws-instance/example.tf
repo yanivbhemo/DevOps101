@@ -8,7 +8,6 @@ resource "aws_lightsail_instance" "dell-devops-lab01" {
   availability_zone = "eu-west-1a"
   blueprint_id      = "amazon_linux_2018_03_0_2"
   bundle_id         = "nano_2_0"
-  key_pair_name     = "some_key_name"
   tags = {
     foo = "bar"
   }
