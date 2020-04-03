@@ -105,6 +105,16 @@ resource "aws_lightsail_instance" "dell-devops-lab01" {
     foo = "bar"
   }
 }
+
+resource "aws_lightsail_instance" "dell-devops-lab02" {
+  name              = "dell-devops-lab02"
+  availability_zone = "eu-west-1a"
+  blueprint_id      = "amazon_linux_2018_03_0_2"
+  bundle_id         = "nano_2_0"
+  tags = {
+    foo = "bar"
+  }
+}
 ```
 
 4. After finish with code needed, we run `terraform validate` and check our config<br>
@@ -145,7 +155,28 @@ Terraform will perform the following actions:
       + username           = (known after apply)
     }
 
-Plan: 1 to add, 0 to change, 0 to destroy.
+  # aws_lightsail_instance.dell-devops-lab02 will be created
+  + resource "aws_lightsail_instance" "dell-devops-lab02" {
+      + arn                = (known after apply)
+      + availability_zone  = "eu-west-1a"
+      + blueprint_id       = "amazon_linux_2018_03_0_2"
+      + bundle_id          = "nano_2_0"
+      + cpu_count          = (known after apply)
+      + created_at         = (known after apply)
+      + id                 = (known after apply)
+      + ipv6_address       = (known after apply)
+      + is_static_ip       = (known after apply)
+      + name               = "dell-devops-lab02"
+      + private_ip_address = (known after apply)
+      + public_ip_address  = (known after apply)
+      + ram_size           = (known after apply)
+      + tags               = {
+          + "foo" = "bar"
+        }
+      + username           = (known after apply)
+    }
+
+Plan: 2 to add, 0 to change, 0 to destroy.
 
 Do you want to perform these actions?
   Terraform will perform the actions described above.
@@ -154,13 +185,21 @@ Do you want to perform these actions?
   Enter a value: yes
 ```
 ```  
+aws_lightsail_instance.dell-devops-lab02: Creating...
 aws_lightsail_instance.dell-devops-lab01: Creating...
+aws_lightsail_instance.dell-devops-lab02: Still creating... [10s elapsed]
 aws_lightsail_instance.dell-devops-lab01: Still creating... [10s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [20s elapsed]
 aws_lightsail_instance.dell-devops-lab01: Still creating... [20s elapsed]
-aws_lightsail_instance.dell-devops-lab01: Still creating... [30s elapsed]
-aws_lightsail_instance.dell-devops-lab01: Creation complete after 30s [id=dell-devops-lab01]
+aws_lightsail_instance.dell-devops-lab01: Creation complete after 29s [id=dell-devops-lab01]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [30s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [40s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [50s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [1m0s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Still creating... [1m10s elapsed]
+aws_lightsail_instance.dell-devops-lab02: Creation complete after 1m12s [id=dell-devops-lab02]
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
 6. After several minutes we would be able to see the new lightsail server we deployed at both the AWS console<br>
@@ -169,18 +208,38 @@ and thourgh terraform cli<br>
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform show
 # aws_lightsail_instance.dell-devops-lab01:
 resource "aws_lightsail_instance" "dell-devops-lab01" {
-    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/3de7301d-3bfa-4575-b14e-ae0c2e63955e"
+    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/c3962dc4-0440-4f3a-95bd-ccf0e1a44bf6"
     availability_zone  = "eu-west-1a"
     blueprint_id       = "amazon_linux_2018_03_0_2"
     bundle_id          = "nano_2_0"
     cpu_count          = 1
-    created_at         = "2020-04-03T12:08:15Z"
+    created_at         = "2020-04-03T12:33:42Z"
     id                 = "dell-devops-lab01"
     is_static_ip       = false
     key_pair_name      = "LightsailDefaultKeyPair"
     name               = "dell-devops-lab01"
-    private_ip_address = "172.26.10.39"
-    public_ip_address  = "63.33.214.61"
+    private_ip_address = "172.26.12.41"
+    public_ip_address  = "3.249.166.187"
+    tags               = {
+        "foo" = "bar"
+    }
+    username           = "ec2-user"
+}
+
+# aws_lightsail_instance.dell-devops-lab02:
+resource "aws_lightsail_instance" "dell-devops-lab02" {
+    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/62ca9764-1059-4121-b5bf-f56319969660"
+    availability_zone  = "eu-west-1a"
+    blueprint_id       = "amazon_linux_2018_03_0_2"
+    bundle_id          = "nano_2_0"
+    cpu_count          = 1
+    created_at         = "2020-04-03T12:33:42Z"
+    id                 = "dell-devops-lab02"
+    is_static_ip       = false
+    key_pair_name      = "LightsailDefaultKeyPair"
+    name               = "dell-devops-lab02"
+    private_ip_address = "172.26.12.27"
+    public_ip_address  = "52.212.28.225"
     tags               = {
         "foo" = "bar"
     }
