@@ -37,7 +37,7 @@ Please enter to it.<br>
 2. Initilization phase - First action before run any new configuration<br>
 `terraform init`<br><br>
 <b>Output:</b>
-```
+```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform init
 
 Initializing the backend...
@@ -90,7 +90,7 @@ resource "aws_lightsail_instance" "dell-devops-lab01" {
 ```
 
 4. After finish with code needed, we run `terraform validate` and check our config<br>
-```cmd
+```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
 Success! The configuration is valid.
 ```
