@@ -15,5 +15,13 @@ Run the following:<br>
 
 ## Stage 1 - Deploy infrastrcture using Terraform
 In this section we will deploy 2 lightsail servers in aws using
-IaaS/IaC methodologies.
+IaaS/IaC methodologies.<br>
 The tool we will use is <a href="https://learn.hashicorp.com/terraform">Terraform</a>, one of the most popular tools for that kind of requirements made by Hashicorp 
+
+### Terraform installation
+1. Please download Terraform on your computer - <br>
+`https://www.terraform.io/downloads.html`
+
+2. Unzip the package and save the binary in the following - <br>
+`Windows: C:\Windows\System32`
+`Linux: /usr/local/bin`
