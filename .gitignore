@@ -1,2 +1,3 @@
 01-terraform-aws-instance/.terraform
 01-terraform-aws-instance/terraform.*
+01-terraform-aws-instance/id_rsa*

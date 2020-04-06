@@ -3,22 +3,24 @@ provider "aws" {
 	region     = "eu-west-1"
 }
 
+resource "aws_lightsail_key_pair" "general_key" {
+  name   = "general_key"
+  public_key = file("id_rsa.pub")
+}
+
 resource "aws_lightsail_instance" "dell-devops-lab01" {
+  key_pair_name    	= aws_lightsail_key_pair.general_key.name
   name              = "dell-devops-lab01"
   availability_zone = "eu-west-1a"
   blueprint_id      = "amazon_linux_2018_03_0_2"
   bundle_id         = "nano_2_0"
-  tags = {
-    foo = "bar"
+  
+  provisioner "remote-exec" {
+    inline = [
+      "sudo amazon-linux-extras enable nginx1.12",
+      "sudo yum -y install nginx",
+      "sudo systemctl start nginx"
+    ]
   }
 }
 
-resource "aws_lightsail_instance" "dell-devops-lab02" {
-  name              = "dell-devops-lab02"
-  availability_zone = "eu-west-1a"
-  blueprint_id      = "amazon_linux_2018_03_0_2"
-  bundle_id         = "nano_2_0"
-  tags = {
-    foo = "bar"
-  }
-}

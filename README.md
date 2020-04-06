@@ -1,5 +1,5 @@
 # DevOps101
-DevOps tutorial for beginners
+DevOps tutorial for intermidiates
 
 ## Stage 0 - Preperations
 ### Git
@@ -85,7 +85,33 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
 
-3. Prepare the config file - <br>
+3. In order to be able to connect to the lightsail servers we will create, or any other vm that you create in AWS<br>
+We will use ssh-key. It is not mandatory, but a very important security best practice. Connect without a password.<br>
+```
+<b>C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>ssh-keygen</b>
+Generating public/private rsa key pair.
+Enter file in which to save the key (C:\Users\benhay/.ssh/id_rsa): C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance\id_rsa
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance\id_rsa.
+Your public key has been saved in C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance\id_rsa.pub.
+The key fingerprint is:
+SHA256:/yqneHGmpu03J6Fl+UctlUiCC80SG4gYIkScmc2BIFI corp\benhay@W10HWW95Y2
+The key's randomart image is:
++---[RSA 2048]----+
+|@=E.o .o+ .      |
+|=B + . oo+ . .   |
+|       .V . o . .|
+|         .   . ..|
+|        S  .   o |
+|        ..A   o .|
+|         ... . . |
+|       o* =.. .  |
+|      o=+=.-..   |
++----[SHA256]-----+
+```
+
+4. Prepare the config file - <br>
 In the config file we will write all the resources we need to deploy.<br>
 I have prepared one in advance for you, lets check it out.<br>
 ```tf
@@ -97,7 +123,7 @@ provider "aws" {
 }
 
 resource "aws_lightsail_instance" "dell-devops-lab01" {
-  name              = "dell-devops-lab01"						----> name of the server to be created
+  name              = "dell-devops-lab01"					----> name of the server to be created
   availability_zone = "eu-west-1a"							----> In which AZ
   blueprint_id      = "amazon_linux_2018_03_0_2"			----> OS
   bundle_id         = "nano_2_0"							----> Hardware type
@@ -117,13 +143,13 @@ resource "aws_lightsail_instance" "dell-devops-lab02" {
 }
 ```
 
-4. After finish with code needed, we run `terraform validate` and check our config<br>
+5. After all the resources have been written, we run `terraform validate` and check our config<br>
 ```
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
 Success! The configuration is valid.
 ```
 
-5. If the config has been validated, we can apply it<br>
+6. If the config has been validated, we can apply it<br>
 Terraform will present us what it is about to create and asks us if we agree or not<br>
 ```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform apply
@@ -202,7 +228,7 @@ aws_lightsail_instance.dell-devops-lab02: Creation complete after 1m12s [id=dell
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
-6. After several minutes we would be able to see the new lightsail server we deployed at both the AWS console<br>
+7. After several minutes we would be able to see the new lightsail server we deployed at both the AWS console<br>
 and thourgh terraform cli<br>
 ```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform show
