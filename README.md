@@ -23,8 +23,8 @@ cd %USERPROFILE%
 mkdir .aws && cd .aws
 vi credentials 
 ```
-2. Change the access_key_id & secret with what you received from us and save the file
-<br>
+2. Write the following inside the new credentials file + <br>
+Change the access_key_id & secret with what you received from us and save the file<br>
 ```
 [default]
 aws_access_key_id = ********************
@@ -319,5 +319,5 @@ resource "aws_lightsail_key_pair" "general_key" {
 8. Let's check if both our servers are alive and configures as we wanted:<br>
 Open another tab in the explorer you use and enter the following url - <br>
 `http://<1st server public ip>/`<br>
-`http://<2nd server public ip>/`
+`http://<2nd server public ip>/`<br>
 In both you should see the "NGINX" first page
