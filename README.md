@@ -322,4 +322,4 @@ Open another tab in the explorer you use and enter the following url - <br>
 `http://<2nd server public ip>/`<br>
 In both you should see the "NGINX" first page
 
-[Imgur](https://i.imgur.com/OAmoez9.png)
+![](https://i.imgur.com/OAmoez9.png)
