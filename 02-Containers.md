@@ -8,8 +8,8 @@ We want to go faster. We want to write what we need and get it.
 ## Lets play with it
 1. Let's first connect to our first server that we have deployed earlier
 We will do it like this:
-```
-C:\Users\benhay\OneDrive - Dell Technologies\Documents\Proconsult-Israel\DevOps101\01-terraform-aws-instance><b>terraform show</b>
+```tf
+C:\Users\benhay\OneDrive - Dell Technologies\Documents\Proconsult-Israel\DevOps101\01-terraform-aws-instance>terraform show
 # aws_lightsail_instance.dell-devops-lab01:
 resource "aws_lightsail_instance" "dell-devops-lab01" {
     arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/049fe37b-b2e6-4bbb-845a-b9a86c817dda"
