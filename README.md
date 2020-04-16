@@ -175,7 +175,7 @@ resource "aws_lightsail_instance" "dell-devops-lab02" {
 ```
 
 5. After all the resources have been written, we run `terraform validate` and check our config<br>
-```
+```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
 Success! The configuration is valid.
 ```
@@ -262,7 +262,7 @@ aws_lightsail_instance.dell-devops-lab02: Still creating... [1m0s elapsed]
 aws_lightsail_instance.dell-devops-lab02: Still creating... [1m10s elapsed]
 aws_lightsail_instance.dell-devops-lab02: Creation complete after 1m12s [id=dell-devops-lab02]
 
-Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
 ```
 
 7. After several minutes we would be able to see the new lightsail server we deployed at both the AWS console<br>
@@ -318,7 +318,6 @@ resource "aws_lightsail_key_pair" "general_key" {
 
 8. Let's check if both our servers are alive and configures as we wanted:<br>
 Open another tab in the explorer you use and enter the following url - <br>
-`http://<1st server public ip>/`
+`http://<1st server public ip>/`<br>
 `http://<2nd server public ip>/`
-<br>
 In both you should see the "NGINX" first page
