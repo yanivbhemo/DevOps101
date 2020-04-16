@@ -122,23 +122,54 @@ provider "aws" {
 	region     = "eu-west-1"
 }
 
+resource "aws_lightsail_key_pair" "general_key" {
+  name   = "general_key"
+  public_key = file("id_rsa.pub")
+}
+
 resource "aws_lightsail_instance" "dell-devops-lab01" {
-  name              = "dell-devops-lab01"					----> name of the server to be created
-  availability_zone = "eu-west-1a"							----> In which AZ
-  blueprint_id      = "amazon_linux_2018_03_0_2"			----> OS
-  bundle_id         = "nano_2_0"							----> Hardware type
-  tags = {													----> General key-value tags
-    foo = "bar"
+  key_pair_name    	= aws_lightsail_key_pair.general_key.name
+  name              = "dell-devops-lab01"
+  availability_zone = "eu-west-1a"
+  blueprint_id      = "amazon_linux_2018_03_0_2"
+  bundle_id         = "nano_2_0"
+  connection {
+		type	=	"ssh"
+		user	=	"ec2-user"
+		private_key	=	file("id_rsa")
+		host        = self.public_ip_address
+	}
+  
+  provisioner "remote-exec" {
+    inline = [
+	  "sudo yum -y update",
+      "sudo amazon-linux-extras enable nginx1.12",
+      "sudo yum -y install nginx",
+      "sudo service nginx start"
+    ]
   }
 }
 
 resource "aws_lightsail_instance" "dell-devops-lab02" {
+  key_pair_name    	= aws_lightsail_key_pair.general_key.name
   name              = "dell-devops-lab02"
   availability_zone = "eu-west-1a"
   blueprint_id      = "amazon_linux_2018_03_0_2"
   bundle_id         = "nano_2_0"
-  tags = {
-    foo = "bar"
+  connection {
+		type	=	"ssh"
+		user	=	"ec2-user"
+		private_key	=	file("id_rsa")
+		host        = self.public_ip_address
+	}
+  
+  provisioner "remote-exec" {
+    inline = [
+	  "sudo yum -y update",
+      "sudo amazon-linux-extras enable nginx1.12",
+      "sudo yum -y install nginx",
+      "sudo service nginx start"
+    ]
   }
 }
 ```
@@ -149,7 +180,7 @@ C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform validate
 Success! The configuration is valid.
 ```
 
-6. If the config has been validated, we can apply it<br>
+6. If the config has been validated, we can apply it using `terraform apply`<br>
 Terraform will present us what it is about to create and asks us if we agree or not<br>
 ```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform apply
@@ -171,13 +202,11 @@ Terraform will perform the following actions:
       + id                 = (known after apply)
       + ipv6_address       = (known after apply)
       + is_static_ip       = (known after apply)
+      + key_pair_name      = "general_key"
       + name               = "dell-devops-lab01"
       + private_ip_address = (known after apply)
       + public_ip_address  = (known after apply)
       + ram_size           = (known after apply)
-      + tags               = {
-          + "foo" = "bar"
-        }
       + username           = (known after apply)
     }
 
@@ -192,23 +221,31 @@ Terraform will perform the following actions:
       + id                 = (known after apply)
       + ipv6_address       = (known after apply)
       + is_static_ip       = (known after apply)
+      + key_pair_name      = "general_key"
       + name               = "dell-devops-lab02"
       + private_ip_address = (known after apply)
       + public_ip_address  = (known after apply)
       + ram_size           = (known after apply)
-      + tags               = {
-          + "foo" = "bar"
-        }
       + username           = (known after apply)
     }
 
-Plan: 2 to add, 0 to change, 0 to destroy.
+  # aws_lightsail_key_pair.general_key will be created
+  + resource "aws_lightsail_key_pair" "general_key" {
+      + arn                   = (known after apply)
+      + encrypted_fingerprint = (known after apply)
+      + encrypted_private_key = (known after apply)
+      + fingerprint           = (known after apply)
+      + id                    = (known after apply)
+      + name                  = "general_key"
+      + private_key           = (known after apply)
+      + public_key            = <<~EOT
+            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDgh1U3nIHvqV4r/l2EVQSlPw+OzH2zOMChlf6eHjUZoo3IpwLhE5jQZBzLI/4TNllY2ZgWt8maq/0y/DJVKhkQj+zK0ETp7jNqYv4INM3y7okGsdNxgsrbUOw8i6hShY1DKfk7GeNAy8lUljjijhdMDWQHT2Nz5ekRxT1EDjXfSN0lIQDRYOhIrRHB7DrXXXXXXXXXXXXXXXXXXXX6gc56+woykskP28bPbVdk029c3N/xqoISzfprVRD7S+gZ5lkcLpPKaq3REWH45akPmXj3y4PVHoIbZ5TjLYR1+aj/gfsB9SsfmEQp4PUpLOpSwdslmpQlRoGOdWqT4RkpK/QxPv1d benhay@W10HWW95Y2
+        EOT
+    }
 
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
+Plan: 3 to add, 0 to change, 0 to destroy.
 
-  Enter a value: yes
+Enter a value: yes
 ```
 ```  
 aws_lightsail_instance.dell-devops-lab02: Creating...
@@ -232,43 +269,56 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 and thourgh terraform cli<br>
 ```tf
 C:\Users\benhay\Desktop\DevOps101\01-terraform-aws-instance>terraform show
+
 # aws_lightsail_instance.dell-devops-lab01:
 resource "aws_lightsail_instance" "dell-devops-lab01" {
-    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/c3962dc4-0440-4f3a-95bd-ccf0e1a44bf6"
+    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/049fe37b-b2e6-4bbb-845a-b9a86c817dda"
     availability_zone  = "eu-west-1a"
     blueprint_id       = "amazon_linux_2018_03_0_2"
     bundle_id          = "nano_2_0"
     cpu_count          = 1
-    created_at         = "2020-04-03T12:33:42Z"
+    created_at         = "2020-04-16T07:42:09Z"
     id                 = "dell-devops-lab01"
     is_static_ip       = false
-    key_pair_name      = "LightsailDefaultKeyPair"
+    key_pair_name      = "general_key"
     name               = "dell-devops-lab01"
-    private_ip_address = "172.26.12.41"
-    public_ip_address  = "3.249.166.187"
-    tags               = {
-        "foo" = "bar"
-    }
+    private_ip_address = "172.26.14.189"
+    <b>public_ip_address  = "X.X.X.X"</b>
     username           = "ec2-user"
 }
 
 # aws_lightsail_instance.dell-devops-lab02:
 resource "aws_lightsail_instance" "dell-devops-lab02" {
-    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/62ca9764-1059-4121-b5bf-f56319969660"
+    arn                = "arn:aws:lightsail:eu-west-1:324324095483:Instance/388e01bf-8ae8-4ff7-80ac-b630dd520396"
     availability_zone  = "eu-west-1a"
     blueprint_id       = "amazon_linux_2018_03_0_2"
     bundle_id          = "nano_2_0"
     cpu_count          = 1
-    created_at         = "2020-04-03T12:33:42Z"
+    created_at         = "2020-04-16T07:42:09Z"
     id                 = "dell-devops-lab02"
     is_static_ip       = false
-    key_pair_name      = "LightsailDefaultKeyPair"
+    key_pair_name      = "general_key"
     name               = "dell-devops-lab02"
-    private_ip_address = "172.26.12.27"
-    public_ip_address  = "52.212.28.225"
-    tags               = {
-        "foo" = "bar"
-    }
+    private_ip_address = "172.26.7.67"
+    <b>public_ip_address  = "X.X.X.X"</b>
     username           = "ec2-user"
 }
+
+# aws_lightsail_key_pair.general_key:
+resource "aws_lightsail_key_pair" "general_key" {
+    arn         = "arn:aws:lightsail:eu-west-1:324324095483:KeyPair/f98d6a52-ea37-4ea7-8365-e961f1d70148"
+    fingerprint = "60:84:f2:85:63:4d:b6:13:d1:00:72:43:90:b5:e6:ec"
+    id          = "general_key"
+    name        = "general_key"
+    public_key  = <<~EOT
+        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDgh1U3nIHvqV4r/l2EVQSlPw+OzH2zOMChlf6eHjUZoo3IpwLhE5jQZBzLI/4TNllY2ZgWt8maq/0y/DJVKhkQj+zK0ETp7jNqYv4INM3y7okGsdNxgsrbUOw8i6hShY1DKfk7GeNAy8lUljjijhdMDWQHT2Nz5ekRxT1EDjXfSN0lIQDRYOhIrRHB7DrTi0cMg4CMEeMdzXM6gc56+woykskP28bPbVdk029c3N/xqoISzfprVRD7S+gZ5lkcLpPKaq3REWH45akPmXj3y4PVHoIbZ5TjLYR1+aj/gfsB9SsfmEQp4PUpLOpSwdslmpQlRoGOdWqT4RkpK/QxPv1d benhay@W10HWW95Y2
+    EOT
+}
 ```
+
+8. Let's check if both our servers are alive and configures as we wanted:<br>
+Open another tab in the explorer you use and enter the following url - <br>
+`http://<1st server public ip>/`
+`http://<2nd server public ip>/`
+<br>
+In both you should see the "NGINX" first page
