@@ -324,3 +324,4 @@ In both you should see the "NGINX" first page
 
 ## Quick recap
 ![](https://i.imgur.com/OAmoez9.png)
+------------
